@@ -7,6 +7,7 @@ const ICONS = {
   instagram: <InstagramIcon />,
   facebook: <FacebookIcon />,
   review: <Star size={22} strokeWidth={2} />,
+  reviewCanon: <Star size={22} strokeWidth={2} />,
 }
 
 /** Maps an entry from `config/links.js` to an AdventureLink with the right icon */
