@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens (Adventure Guide palette) ---------- */
+@theme {
+  --color-abyss: #081a2a;
+  --color-deep: #0b1f32;
+  --color-teal: #00bfae;
+  --color-teal-soft: #27c7be;
+  --color-cyan: #009fe3;
+  --color-mist: #8fa4b8;
+  --color-nodi: #4db8b0;
+
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--color-abyss);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-abyss);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+/* ---------- Ambient background animations (GPU-friendly: transform/opacity only) ---------- */
+@keyframes topo-drift {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(-2%, 1.5%, 0) rotate(2deg) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+}
+@keyframes topo-drift-reverse {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50%  { transform: translate3d(2%, -1%, 0) rotate(-2.5deg); }
+  100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+}
+@keyframes gps-ping {
+  0%   { transform: scale(0.6); opacity: 0.55; }
+  80%  { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes rise {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  15%  { opacity: 0.6; }
+  85%  { opacity: 0.35; }
+  100% { transform: translate3d(0, -60vh, 0); opacity: 0; }
+}
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, 0) scale(1); }
+  50%      { opacity: 0.8;  transform: translate(-50%, 0) scale(1.08); }
+}
+@keyframes route-flow {
+  to { stroke-dashoffset: -28; }
+}
+
+.animate-topo         { animation: topo-drift 60s ease-in-out infinite; }
+.animate-topo-reverse { animation: topo-drift-reverse 80s ease-in-out infinite; }
+.animate-gps-ping     { animation: gps-ping 3.2s var(--ease-out-expo) infinite; }
+.animate-rise         { animation: rise linear infinite; }
+.animate-glow         { animation: glow-breathe 9s ease-in-out infinite; }
+.animate-route-flow   { animation: route-flow 2.4s linear infinite; }
+
+/* Respect the user's OS setting: stop all ambient motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
